@@ -77,3 +77,35 @@ x2 = np.linspace(1,9,5)
 >>> print(np.remainder(x1,x2))  ##取余 等同于np.mod(x1,x2)
 [0. 0. 0. 0. 0.]
 
+计算数组/矩阵中的最大值函数amx(),最小值函数amin()
+最大值与最小值之差ptp()
+百分位数percentile()
+中位数median()
+平均数mean()
+加权平均值average()
+标准差std()
+方差var()
+
+
+NumPy排序
+sort(a,axis=1,kind='quicksort',order=None)
+快速排序:quicksort
+合并排序:mergesort
+堆排序:heapsort
+
+>>> a = np.array([[4,3,2],[2,4,1]])
+>>> a
+array([[4, 3, 2],
+       [2, 4, 1]])
+>>> print(np.sort(a))  
+[[2 3 4]
+ [1 2 4]]
+>>> print(np.sort(a,axis=None))
+[1 2 2 3 4 4]
+>>> print(np.sort(a,axis=0))  ##按行
+[[2 3 1]
+ [4 4 2]]
+>>> print(np.sort(a,axis=1))  ##按列
+[[2 3 4]
+ [1 2 4]]
+>>> 
