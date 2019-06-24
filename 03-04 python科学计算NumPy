@@ -1,0 +1,60 @@
+运用NumPy数组结构优点:
+python本身的列表list的元素在系统内存中是分散存储的
+NumPy数组存储在一个均匀连续的内存块中, 不需要像列表list对内存地址进行查找, 从而节省了计算资源.
+
+一些技巧来提升内存和提高计算资源的利用率. 避免采用隐式拷贝,而是采用就地操作的方式: 写成x *=2 ,而不是y=x*2
+
+NumPy中两个重要的对象:
+ndarray(N-dimensional array object)解决了多维数组问题
+ufunc(universal function object)解决对数组进行处理的函数
+
+### ndarray对象如何创建数组, 如何处理结构数组
+
+"""
+1.创建数组
+"""
+import numpy as np
+a = np.array([1,2,3])
+b = np.array([[1,2,3],[4,5,6],[7,8,9]])
+b[1,1]=10
+
+
+###数组的大小
+print(a.shape)
+print(b.shape)
+
+###元素的属性
+print(a.dtype)
+print(b)
+
+
+"""
+2.定义结构数组
+  :用dtype定义结构类型,然后在定义数组的时候,用array中指定了结构数组的类型dtype=persontype
+"""
+import numpy as np
+persontype = np.dtype({
+
+    'names':['name','age','chinese','math','english'],
+    'formats':['S32','i','i','i','f']})
+
+peoples = np.array(
+    [('ZhangFei',32,75,100,90),
+     ('GuanYu',24,85,96,88.5),
+     ('ZhaoYun',28,85,92,96.5),
+     ('HuangZhong',29,65,85,100)],
+    dtype = persontype)
+
+ages = peoples[:]['age']
+chineses = peoples[:]['chinese']
+maths = peoples[:]['math']
+englishs = peoples[:]['english']
+
+print(np.mean(maths))
+print(np.mean(chineses))
+print(np.mean(englishs))
+
+NumPy可以方便地创建连续数组
+
+x1 = np.arange(1,11,2)   ###初始值,终值,步长
+x2 = np.linspace(1,9,5)  ###初始值,终值,元素个数
