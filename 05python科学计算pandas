@@ -1,0 +1,84 @@
+一.
+series是一个定长的字典序列
+两个基本属性:index values. index默认是0,1,2...递增的整数序列. 也可以自己来指定索引 index=['a','b','c']
+
+"""
+产生序列
+"""
+
+import pandas as pd
+from pandas import Series, DataFrame
+x1 = Series([1,2,3,4])   ##默认索引
+x2 = Series(data=[1,2,3,4], index=['a','b','c','d'])   ##指定索引
+print(x1)
+print(x2)
+
+结果:
+0    1
+1    2
+2    3
+3    4
+dtype: int64
+a    1
+b    2
+c    3
+d    4
+dtype: int64
+
+也可以采用字典的方式来创建Series 
+
+d = {'a':1, 'b':2, 'c':3, 'd':4}
+x3 = Series(d)
+print(x3)
+
+二.
+DataFrame 类型数据结构类似数据库表
+包括了行索引和列索引, 可以看作是由相同索引的Series组成的字典类型
+"""
+产生数据框
+"""
+
+import pandas as pd
+from pandas import Series, DataFrame
+data = {'Chinese':[66,95,93,90,80],'English':[65,85,92,88,90],
+        'Math':[30,98,96,77,90]}
+df1 = DataFrame(data)
+df2 = DataFrame(data, index=['ZhangFei','GuanYu','ZhaoYun','HuangZhong','DianWei'],
+                columns = ['English', 'Math','Chinese'])
+print(df1)
+print(df2)
+
+运行结果:
+df1
+   Chinese  English  Math
+0       66       65    30
+1       95       85    98
+2       93       92    96
+3       90       88    77
+4       80       90    90
+df2
+            English  Math  Chinese
+ZhangFei         65    30       66
+GuanYu           85    98       95
+ZhaoYun          92    96       93
+HuangZhong       88    77       90
+DianWei          90    90       80
+
+三.
+数据处理流程
+1. 数据的导入和导出
+import pandas as pd
+from pandas import Series, DataFrame
+pd.read_excel('.xlsx')
+score.to_excel('.xlsx')
+
+2.数据清洗
+df2 = df2.drop(columns = ['Chinese'])  ##删除的列或行
+df2 = df2.drop(index = ['ZhangFei']) 
+
+df2.rename(columns = {'Chinese':'YuWen', 'English':'YingYu'},inplace=True)   ##重命名列
+
+df = df.drop_duplicates() ##去除重复行
+
+df2['Chinese'].astype('str')
+df2['Chinese'].astype(np.int64)
