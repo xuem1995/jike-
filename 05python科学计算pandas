@@ -71,7 +71,6 @@ import pandas as pd
 from pandas import Series, DataFrame
 pd.read_excel('.xlsx')
 score.to_excel('.xlsx')
-
 2.数据清洗
 df2 = df2.drop(columns = ['Chinese'])  ##删除的列或行
 df2 = df2.drop(index = ['ZhangFei']) 
@@ -82,3 +81,72 @@ df = df.drop_duplicates() ##去除重复行
 
 df2['Chinese'].astype('str')
 df2['Chinese'].astype(np.int64)
+
+df2['Chinese']=df2['Chinese'].map(str.strip)  ##删除左右两边空格
+df2['Chinese']=df2['Chinese'].map(str.lstrip) ##删除左边空格
+df2['Chinese']=df2['Chinese'].map(str.rstrip) ##删除右边空格
+
+df2['Chinese']=df2['Chinese'].str.strip('$') ##删除特殊符号
+
+df2.columns = df2.columns.str.upper()
+df2.columns = df2.columns.str.lower()
+df2.columns = df2.columns.str.title()
+
+使用apply函数对数据进行清洗
+df['name'] = df['name'].apply(str.upper)  ##对name列的数值进行大写转化
+
+"""
+新增两列
+'new1'列是'Chinese'和'English'成绩之和的m倍
+'new2'列是'Chinese'和'English'成绩之和的n倍
+"""
+
+def plus(df,n,m):
+    df['new1'] = (df[u'Chinese'])+df[u'English']*m
+    df['new2'] = (df[u'Chinese'])+df[u'English']*n
+    return df
+df1 = df1.apply(plus,axis=1,args=(2,3))
+
+>>> print(df1)
+   Chinese  English  Math  new1  new2
+0       66       65    30   261   196
+1       95       85    98   350   265
+2       93       92    96   369   277
+3       90       88    77   354   266
+4       80       90    90   350   260
+
+
+"""
+练习
+"""
+import pandas as pd
+from pandas import DataFrame
+data = {'Chinese':[66,95,95,90,80,80],
+        'English':[65,85,92,88,90,90],
+        'Math':[None,98,96,77,90,90]}
+df = DataFrame(data, index=['ZhangFei','GuanYu','ZhaoYun',
+                            'HuangZhong','ianWei','DianWei'],
+               columns = ['Chinese','English','Math'])
+print(df)
+
+## 去除重复行
+df = df.drop_duplicates()
+
+## 列名重新排序
+cols = ['Chinese', 'English','Math']
+df = df.filter(cols, axis=1)
+
+## 列名改为中文
+df.rename(columns = {'Chinese':'语文','English':'英语','Math':'数学'},inplace=True)
+
+## 定义总分函数
+def total_score(df):
+    df['总分']=df['语文']+df['英语']+df['数学']
+    return df
+
+## 求成绩的和 用apply
+df = df.apply(total_score, axis=1)
+
+## 按照总分排序, 从高到低
+df.sort_values(['总分'],ascending=[False],inplace=True)
+print(df.describe())
