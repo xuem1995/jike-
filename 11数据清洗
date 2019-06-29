@@ -1,0 +1,9 @@
+import pandas as pd
+
+from pandas import Series, DataFrame
+
+df =pd.read_excel('C:\\Users\\xuemeng\\Desktop\\11data.xlsx')
+
+
+0列表示序号; 1列表示会员的姓名; 2列表示年龄; 3列表示体重; 4-6表示男性会员的三围尺寸; 7-9列表示女性会员的三围尺寸
+
