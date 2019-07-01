@@ -1,9 +1,34 @@
 import pandas as pd
 
-from pandas import Series, DataFrame
+df = pd.read_csv('C:\\Users\\xuemeng\\Desktop\\py\\11data.csv',
+                  names = ['Name', 'Age', 'Weight','m1','m2','m3',
+                            'f1','f2','f3'])
 
-df =pd.read_excel('C:\\Users\\xuemeng\\Desktop\\11data.xlsx')
+"""
+0列表示序号; 1列表示会员的姓名; 2列表示年龄;
+3列表示体重; 4-6表示男性会员的三围尺寸; 7-9列表示女性会员的三围尺寸
+"""
+
+#df['Age'].fillna(df['Age'].mean(),inplace=True)  #平均年龄填充 缺失的年龄值
+
+## 删除全空的行
+df.dropna(how = 'all',inplace=True)
 
 
-0列表示序号; 1列表示会员的姓名; 2列表示年龄; 3列表示体重; 4-6表示男性会员的三围尺寸; 7-9列表示女性会员的三围尺寸
+##统一度量单位
 
+# 获取Weight数据列中单位为 lbs 的数据
+rows_with_lbs = df['Weight'].str.contains('lbs').fillna(False)
+print(df[rows_with_lbs])
+# 将 lbs 转换成kgs 2.2lbs=1kgs
+for i,lbs_row in df[rows_with_lbs].iterrows():
+    ##截取从头开始到倒数第三个字符之前, 即去掉 lbs
+    weight = int(float(lbs_row['Weight'][:-3])/2.2)
+    df.at[i,'weight'] = '{}kgs'.format(weight)
+print(df)
+
+
+###切分名字, 删除源数据列
+df[['first_name','last_name']] = df['Name'].str.split(expand=True)
+df.drop('Name',axis=1,inplace=True)
+print(df)
