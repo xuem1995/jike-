@@ -32,3 +32,20 @@ print(df)
 df[['first_name','last_name']] = df['Name'].str.split(expand=True)
 df.drop('Name',axis=1,inplace=True)
 print(df)
+
+
+
+"""
+作业
+"""
+df1 = pd.read_csv('C:\\Users\\xuemeng\\Desktop\\py\\11work.csv')
+df1['food'] = df1['food'].str.lower()  #转换为小写
+
+ # 删除缺失值
+df1 = df1.dropna()
+df1.index = range(len(df1))  #重列索引
+
+## bacon求平均值, 删除第二个
+df1.loc[0,'ounces'] = df1[df1['food'].isin(['bacon'])].mean()['ounces']
+df1.drop(df1.index[4],inplace=True)
+df1.index = range(len(df1))  ##重列索引
