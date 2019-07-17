@@ -1,0 +1,9 @@
+有监督的学习
+
+首先使用SVC的构造函数: 
+model = svm.SVC(kernel='rbf', C=1.0, gamma='auto')
+
+https://mubu.com/docCLBYNQMhk_
+
+
+
